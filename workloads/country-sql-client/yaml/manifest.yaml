@@ -1,0 +1,64 @@
+##################################################################################################
+# Internal service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: intservice
+  labels:
+    app: intservice
+    service: intservice
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: intservice
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sash-intservice
+  labels:
+    account: intservice
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: intservice-v1
+  labels:
+    app: intservice
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: intservice
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: intservice
+        version: v1
+    spec:
+      serviceAccountName: sash-intservice
+      containers:
+      - name: intservice
+        image: gcr.io/sash-poc/quarkus-sql-client:v1
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: LOG_DIR
+          value: "/tmp/logs"
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+        - name: wlp-output
+          mountPath: /opt/ibm/wlp/output
+      volumes:
+      - name: wlp-output
+        emptyDir: {}
+      - name: tmp
+        emptyDir: {}
+---

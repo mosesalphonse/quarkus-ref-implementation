@@ -1,0 +1,51 @@
+##################################################################################################
+# External service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: extservice
+  labels:
+    app: extservice
+    service: extservice
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: extservice
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sash-account
+  labels:
+    account: extservice
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: extservice-v1
+  labels:
+    app: extservice
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: extservice
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: extservice
+        version: v1
+    spec:
+      serviceAccountName: sash-account
+      containers:
+      - name: extservice
+        image: gcr.io/sash-poc/quarkus-ext-client:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+---
