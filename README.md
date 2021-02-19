@@ -15,6 +15,8 @@ b) Istio Instalation (tested on istio-1.9.0)
 C) Kiali Dashboard
 
 ```
+##  Steps:
+
 ```
 git clone https://github.com/mosesalphonse/quarkus-ref-implementation.git
 
