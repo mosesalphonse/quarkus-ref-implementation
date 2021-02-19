@@ -80,6 +80,8 @@ Create Istio Configs:
 	kubectl apply -f networks/orm-dr.yaml		# It is a Destiation Rule for Internal service
 	
 	kubectl apply -f networks/orm-gw.yaml		# It is a Internal Gateway which will connect to Istio Ingress Gateway
+	
+Note: You can also use Kiali console for enabling the above Istio services.
 
 A/B testing:
 
