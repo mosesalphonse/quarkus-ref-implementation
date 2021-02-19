@@ -15,13 +15,6 @@ spec:
   selector:
     app: intservice
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: sash-intservice
-  labels:
-    account: intservice
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -41,7 +34,7 @@ spec:
         app: intservice
         version: v1
     spec:
-      serviceAccountName: sash-intservice
+      serviceAccountName: sash-account
       containers:
       - name: intservice
         image: gcr.io/sash-poc/quarkus-sql-client:v1

@@ -15,13 +15,6 @@ spec:
   selector:
     app: frontend
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: sash-account
-  labels:
-    account: frontend
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
