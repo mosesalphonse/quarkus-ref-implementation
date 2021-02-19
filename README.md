@@ -25,14 +25,14 @@ cd quarkus-ref-implementation
 ```
 ##  Build Workloads:
 
-### country-ext-rest-client:
+### country-ext-rest-client (ExtService):
 ```
 	cd workloads/country-ext-rest-client
 
 	mvn clean package -Dmaven.test.skip=true -Dquarkus.container-image.push=true
   
 ```
-### country-sql-client:
+### country-sql-client(IntService):
 ```
 	cd workloads/country-sql-client
 
