@@ -1,0 +1,41 @@
+kind: Gateway
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: intservice-gateway
+  namespace: default
+  selfLink: >-
+    /apis/networking.istio.io/v1alpha3/namespaces/default/gateways/intservice-gateway
+  uid: 9cb25220-07ab-47ee-b35f-ea46f4e722a7
+  resourceVersion: '12319'
+  generation: 1
+  creationTimestamp: '2021-02-19T10:19:09Z'
+  labels:
+    kiali_wizard: traffic_shifting
+  managedFields:
+    - manager: Go-http-client
+      operation: Update
+      apiVersion: networking.istio.io/v1alpha3
+      time: '2021-02-19T10:19:09Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:kiali_wizard': {}
+        'f:spec':
+          .: {}
+          'f:selector':
+            .: {}
+            'f:istio': {}
+          'f:servers': {}
+spec:
+  servers:
+    - hosts:
+        - '*'
+      port:
+        name: http
+        number: 31400
+        protocol: HTTP
+  selector:
+    istio: ingressgateway
+

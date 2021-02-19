@@ -1,0 +1,35 @@
+kind: DestinationRule
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: intservice
+  namespace: default
+  selfLink: >-
+    /apis/networking.istio.io/v1alpha3/namespaces/default/destinationrules/intservice
+  uid: a344be4b-96c7-438c-91dd-5e8e0915a2d6
+  resourceVersion: '12320'
+  generation: 1
+  creationTimestamp: '2021-02-19T10:19:09Z'
+  labels:
+    kiali_wizard: traffic_shifting
+  managedFields:
+    - manager: Go-http-client
+      operation: Update
+      apiVersion: networking.istio.io/v1alpha3
+      time: '2021-02-19T10:19:09Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:kiali_wizard': {}
+        'f:spec':
+          .: {}
+          'f:host': {}
+          'f:subsets': {}
+spec:
+  host: intservice.default.svc.cluster.local
+  subsets:
+    - labels:
+        version: v1
+      name: v1
+

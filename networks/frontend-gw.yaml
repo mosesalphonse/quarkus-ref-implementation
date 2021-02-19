@@ -1,0 +1,41 @@
+kind: Gateway
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: frontend-gateway
+  namespace: default
+  selfLink: >-
+    /apis/networking.istio.io/v1alpha3/namespaces/default/gateways/frontend-gateway
+  uid: dc0b8669-bbc1-4832-ae8b-ac1c3c66dbdd
+  resourceVersion: '38004'
+  generation: 1
+  creationTimestamp: '2021-02-19T11:25:57Z'
+  labels:
+    kiali_wizard: request_routing
+  managedFields:
+    - manager: Go-http-client
+      operation: Update
+      apiVersion: networking.istio.io/v1alpha3
+      time: '2021-02-19T11:25:57Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:kiali_wizard': {}
+        'f:spec':
+          .: {}
+          'f:selector':
+            .: {}
+            'f:istio': {}
+          'f:servers': {}
+spec:
+  servers:
+    - hosts:
+        - '*'
+      port:
+        name: http
+        number: 80
+        protocol: HTTP
+  selector:
+    istio: ingressgateway
+

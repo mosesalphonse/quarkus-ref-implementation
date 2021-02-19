@@ -1,0 +1,41 @@
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: intservice
+  namespace: default
+  selfLink: >-
+    /apis/networking.istio.io/v1alpha3/namespaces/default/virtualservices/intservice
+  uid: 959bebb7-5196-4e82-be96-2b3fe3806f15
+  resourceVersion: '12322'
+  generation: 1
+  creationTimestamp: '2021-02-19T10:19:10Z'
+  labels:
+    kiali_wizard: traffic_shifting
+  managedFields:
+    - manager: Go-http-client
+      operation: Update
+      apiVersion: networking.istio.io/v1alpha3
+      time: '2021-02-19T10:19:10Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:kiali_wizard': {}
+        'f:spec':
+          .: {}
+          'f:gateways': {}
+          'f:hosts': {}
+          'f:http': {}
+spec:
+  hosts:
+    - '*'
+  gateways:
+    - default/intservice-gateway
+  http:
+    - route:
+        - destination:
+            host: intservice.default.svc.cluster.local
+            subset: v1
+          weight: 100
+

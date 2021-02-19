@@ -1,0 +1,70 @@
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: frontend
+  namespace: default
+  selfLink: >-
+    /apis/networking.istio.io/v1alpha3/namespaces/default/virtualservices/frontend
+  uid: 62f1895b-49d8-47f8-a5ff-34a99149eff1
+  resourceVersion: '38002'
+  generation: 1
+  creationTimestamp: '2021-02-19T11:25:56Z'
+  labels:
+    kiali_wizard: request_routing
+  managedFields:
+    - manager: Go-http-client
+      operation: Update
+      apiVersion: networking.istio.io/v1alpha3
+      time: '2021-02-19T11:25:56Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:kiali_wizard': {}
+        'f:spec':
+          .: {}
+          'f:gateways': {}
+          'f:hosts': {}
+          'f:http': {}
+spec:
+  hosts:
+    - '*'
+  gateways:
+    - default/frontend-gateway
+  http:
+    - match:
+        - headers:
+            username:
+              exact: moses
+      route:
+        - destination:
+            host: frontend.default.svc.cluster.local
+            subset: v1
+          weight: 0
+        - destination:
+            host: frontend.default.svc.cluster.local
+            subset: v2
+          weight: 0
+        - destination:
+            host: frontend.default.svc.cluster.local
+            subset: v3
+          weight: 100
+    - match:
+        - method:
+            exact: get
+        - method: {}
+      route:
+        - destination:
+            host: frontend.default.svc.cluster.local
+            subset: v1
+          weight: 33
+        - destination:
+            host: frontend.default.svc.cluster.local
+            subset: v2
+          weight: 33
+        - destination:
+            host: frontend.default.svc.cluster.local
+            subset: v3
+          weight: 34
+
