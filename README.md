@@ -55,13 +55,18 @@ cd quarkus-ref-implementation
 ```
 	kubectl create -f  workloads/country-ext-rest-client/yaml/manifest.yaml	# Deploy Ext Service
 	kubectl create -f  workloads/country-sql-client/yaml/manifest.yaml	# Deploy Internal ORM Service
-	kubectl create -f  workloads/frontend/yaml/manifest.yaml	# Error Workload, error in logic, it will fail
-	kubectl create -f  workloads/frontend/yaml/deployment-v2.yaml	# It is working, but there is no backend call
+	kubectl create -f  workloads/frontend/yaml/manifest.yaml	# version 1 of the code
+	kubectl create -f  workloads/frontend/yaml/deployment-v2.yaml	# Version 2 code
+	
+```
+
+### Deploy new verision - Canary Release:
+```
 	kubectl create -f  workloads/frontend/yaml/deployment-v3.yaml	# It is working, with internal and external backend call
 ```
 
 ###  Enable Ingress through ISTIO Ingress gateway to Frontend workload:
-	- Use Kiali Console to create Gateway
+	- Use Kiali Console to create Request Routing & Gateway
 	- Enable canary deployment using Kiali dashboard
 
 Invoke Frontend App using istio-ingressgateway's public IP
@@ -108,4 +113,10 @@ http://{istio-ingress-externalip}:31400/countries
 ### generare some traffic:
 ```
 for ((i=1;i<=2000;i++)); do   curl -v --header "Connection: keep-alive" "http://ip:80/home?user=uk"; done
+```
+
+### List the namespaces labeld for istio Sidecar injection:
+```
+	kubectl get namespace -L istio-injection
+	
 ```
