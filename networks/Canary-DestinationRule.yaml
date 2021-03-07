@@ -1,0 +1,48 @@
+kind: DestinationRule
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: frontend
+  namespace: default
+  selfLink: >-
+    /apis/networking.istio.io/v1alpha3/namespaces/default/destinationrules/frontend
+  uid: 2cb8bef2-560c-42a3-8c2e-77580fef43fd
+  resourceVersion: '24670'
+  generation: 2
+  creationTimestamp: '2021-03-07T11:42:57Z'
+  labels:
+    kiali_wizard: request_routing
+  managedFields:
+    - manager: kubectl-create
+      operation: Update
+      apiVersion: networking.istio.io/v1alpha3
+      time: '2021-03-07T11:42:57Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:kiali_wizard': {}
+        'f:spec':
+          .: {}
+          'f:host': {}
+    - manager: Go-http-client
+      operation: Update
+      apiVersion: networking.istio.io/v1alpha3
+      time: '2021-03-07T12:02:07Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:subsets': {}
+spec:
+  host: frontend.default.svc.cluster.local
+  subsets:
+    - labels:
+        version: v1
+      name: v1
+    - labels:
+        version: v2
+      name: v2
+    - labels:
+        version: v3
+      name: v3
+

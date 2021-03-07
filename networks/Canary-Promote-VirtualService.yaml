@@ -1,0 +1,56 @@
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: frontend
+  namespace: default
+  selfLink: >-
+    /apis/networking.istio.io/v1alpha3/namespaces/default/virtualservices/frontend
+  uid: 1be04680-2c75-4183-824c-d9f69c3938d8
+  resourceVersion: '27341'
+  generation: 3
+  creationTimestamp: '2021-03-07T11:42:56Z'
+  labels:
+    kiali_wizard: request_routing
+  managedFields:
+    - manager: kubectl-create
+      operation: Update
+      apiVersion: networking.istio.io/v1alpha3
+      time: '2021-03-07T11:42:56Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:kiali_wizard': {}
+        'f:spec':
+          .: {}
+          'f:gateways': {}
+          'f:hosts': {}
+    - manager: Go-http-client
+      operation: Update
+      apiVersion: networking.istio.io/v1alpha3
+      time: '2021-03-07T12:09:00Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:http': {}
+spec:
+  hosts:
+    - '*'
+  gateways:
+    - default/frontend-gateway
+  http:
+    - route:
+        - destination:
+            host: frontend.default.svc.cluster.local
+            subset: v1
+          weight: 0
+        - destination:
+            host: frontend.default.svc.cluster.local
+            subset: v2
+          weight: 0
+        - destination:
+            host: frontend.default.svc.cluster.local
+            subset: v3
+          weight: 100
+
