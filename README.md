@@ -132,7 +132,7 @@ http://{istio-ingress-externalip}/home?user=india
 ```
 ### generare some traffic:
 ```
-for ((i=1;i<=2000;i++)); do   curl -v --header "Connection: keep-alive" "http://ip:80/home?user=uk"; done
+for ((i=1;i<=2000;i++)); do   curl -v --header "Connection: keep-alive" "http://ingressip/home?user=uk"; done
 ```
 
 ### List the namespaces labeld for istio Sidecar injection:
