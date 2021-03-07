@@ -2,7 +2,7 @@
 
 ## POC:
 ```
-a) Canary Deployment
+a) Canary Deployment with A/B Testing
 b) Service Discovery
 c) Istio Ingress Gateway
 
@@ -12,7 +12,7 @@ c) Istio Ingress Gateway
 ```
 a) Kubernetes Cluster (tested on v1.18.12-gke.1210)
 b) Istio Instalation (tested on istio-1.9.0)
-C) Kiali Dashboard
+C) Kiali
 
 ```
 ##  Steps:
@@ -51,14 +51,17 @@ cd quarkus-ref-implementation
 ```
 	kubectl create -f workloads/postgres/yamls/postgres.yaml
 ```
-### Workloads:
+### Initial Workloads for A/B testing:
 ```
-	kubectl create -f  workloads/country-ext-rest-client/yaml/manifest.yaml	# Deploy Ext Service
-	kubectl create -f  workloads/country-sql-client/yaml/manifest.yaml	# Deploy Internal ORM Service
-	kubectl create -f  workloads/frontend/yaml/manifest.yaml	# version 1 of the code
-	kubectl create -f  workloads/frontend/yaml/deployment-v2.yaml	# Version 2 code
-	
+	kubectl create -f  workloads/frontend/yaml/deployment-v1.yaml
+	kubectl create -f  workloads/frontend/yaml/deployment-v2.yaml
+	kubectl create -f  workloads/frontend/yaml/service.yaml
+	kubectl create -f  workloads/country-ext-rest-client/yaml/manifest.yaml
+	kubectl create -f  workloads/country-sql-client/yaml/manifest.yaml
+
 ```
+## A/B Testing (50-50 to V1 and V2 of the frontend):
+
 
 ### Deploy new verision - Canary Release:
 ```
