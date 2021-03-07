@@ -23,7 +23,7 @@ git clone https://github.com/mosesalphonse/quarkus-ref-implementation.git
 cd quarkus-ref-implementation
 
 ```
-##  Build Workloads:
+##  Build Workloads and Push images into Registry:
 
 ### country-ext-rest-client (ExtService):
 ```
@@ -54,14 +54,16 @@ cd quarkus-ref-implementation
 	kubectl create -f  workloads/frontend/yaml/deployment-v2.yaml
 	kubectl create -f  workloads/frontend/yaml/service.yaml
 ```
-## A/B Testing (50-50 to V1 and V2 of the frontend):
+## Network Config for A/B Testing (50-50 to V1 and V2 of the frontend):
 
 ```
+	kubectl create -f  networks/AB-VirtualService.yaml
+	kubectl create -f  networks/AB-DestinationRule.yaml
+	kubectl create -f  networks/AB-Gateway.yaml
 	
 ```
 
-
-### Deploy new verision and its Dependency - Canary Release:
+### Deploy new verision(V3) and its Dependency(ExtService & IntService) - Canary Release:
 ```
 	kubectl create -f  workloads/frontend/yaml/deployment-v3.yaml
 	kubectl create -f workloads/postgres/yamls/postgres.yaml
@@ -70,34 +72,50 @@ cd quarkus-ref-implementation
 
 ```
 
+### Update Network Config - Canary Release:
+```
+	kubectl delete -f  networks/AB-VirtualService.yaml
+	kubectl delete -f  networks/AB-DestinationRule.yaml
+	kubectl apply -f  networks/Canary-VirtualService.yaml
+	kubectl apply -f  networks/Canary-DestinationRule.yaml
+
+```
+
+### Promote tested version - Update Network Config:
+```
+	kubectl delete -f  networks/Canary-VirtualService.yaml
+	kubectl delete -f  networks/Canary-DestinationRule.yaml
+	kubectl apply -f  networks/Canary-Promote-VirtualService.yaml
+	kubectl apply -f  networks/Canary-Promote-DestinationRule.yaml
+
+```
+
+### Remove Older versions:
+```
+	kubectl delete -f  workloads/frontend/yaml/deployment-v1.yaml
+	kubectl delete -f  workloads/frontend/yaml/deployment-v2.yaml
+
+```
+
+### Uninstall:
+```
+	kubectl delete -f  workloads/frontend/yaml/service-account.yaml
+	kubectl delete -f  workloads/frontend/yaml/deployment-v3.yaml
+	kubectl delete -f  workloads/frontend/yaml/service.yaml
+	kubectl delete -f  networks/AB-VirtualService.yaml
+	kubectl delete -f  networks/AB-DestinationRule.yaml
+	kubectl delete -f  networks/AB-Gateway.yaml
+	kubectl delete -f workloads/postgres/yamls/postgres.yaml
+	kubectl delete -f workloads/country-ext-rest-client/yaml/manifest.yaml
+	kubectl delete -f workloads/country-sql-client/yaml/manifest.yaml
+
+```
 
 ###  Enable Ingress through ISTIO Ingress gateway to Frontend workload:
 	- Use Kiali Console to create Request Routing & Gateway
 	- Enable canary deployment using Kiali dashboard
 
 Invoke Frontend App using istio-ingressgateway's public IP
-
-
-## Canary Deployments and A/B Testing:
-```
-Create Istio Configs:
-
-	kubectl apply -f networks/frontend-vs.yaml	# It is a Frontend Virtual Service with 2 routing rules, one is all traffic which distributes to all 3 									versions of the frontend workloads. The Second rule will identify the specific test user(username=moses) from the 							  header whos traffic alone will be diverted to the newer version(v3) of the workload
-	
-	kubectl apply -f networks/frontend-dr.yaml	# It is a Destiation Rule for Frontend Service
-	
-	kubectl apply -f networks/frontend-gw.yaml	# It is a Frontend Gateway which will connect to Istio Ingress Gateway
-	
-	kubectl apply -f networks/orm-vs.yaml		# Since there is a UI available in this Internal service, created a Virtual Service
-	
-	kubectl apply -f networks/orm-dr.yaml		# It is a Destiation Rule for Internal service
-	
-	kubectl apply -f networks/orm-gw.yaml		# It is a Internal Gateway which will connect to Istio Ingress Gateway
-	
-Note: You can also use Kiali console for enabling the above Istio services.
-
-A/B testing:
-
 
 curl http://{istio-ingress-externalip}/home?user=india  # traffics will be distributed into v1, v2 and V3 of the frontend workloads equally
 
