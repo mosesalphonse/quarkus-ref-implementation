@@ -129,10 +129,6 @@ http://{istio-ingress-externalip}/
 
 http://{istio-ingress-externalip}/home?user=india
 
-http://{istio-ingress-externalip}:31400/
-
-http://{istio-ingress-externalip}:31400/countries
-
 ```
 ### generare some traffic:
 ```
