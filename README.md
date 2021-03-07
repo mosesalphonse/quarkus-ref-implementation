@@ -47,26 +47,26 @@ cd quarkus-ref-implementation
 ```
 ## Deployments:
 
-### Postgress:
-```
-	kubectl create -f workloads/postgres/yamls/postgres.yaml
-```
 ### Initial Workloads for A/B testing:
 ```
 	kubectl create -f  workloads/frontend/yaml/deployment-v1.yaml
 	kubectl create -f  workloads/frontend/yaml/deployment-v2.yaml
 	kubectl create -f  workloads/frontend/yaml/service.yaml
-	kubectl create -f  workloads/country-ext-rest-client/yaml/manifest.yaml
-	kubectl create -f  workloads/country-sql-client/yaml/manifest.yaml
+
 
 ```
 ## A/B Testing (50-50 to V1 and V2 of the frontend):
 
 
-### Deploy new verision - Canary Release:
+### Deploy new verision and its Dependency - Canary Release:
 ```
-	kubectl create -f  workloads/frontend/yaml/deployment-v3.yaml	# It is working, with internal and external backend call
+	kubectl create -f  workloads/frontend/yaml/deployment-v3.yaml
+	kubectl create -f workloads/postgres/yamls/postgres.yaml
+	kubectl create -f  workloads/country-ext-rest-client/yaml/manifest.yaml
+	kubectl create -f  workloads/country-sql-client/yaml/manifest.yaml
+
 ```
+
 
 ###  Enable Ingress through ISTIO Ingress gateway to Frontend workload:
 	- Use Kiali Console to create Request Routing & Gateway
