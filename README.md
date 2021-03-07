@@ -1,4 +1,4 @@
-# quarkus-ref-implementation
+# Quarkus-ref-implementation - Canary rollout with ISTIO
 
 ## POC:
 ```
