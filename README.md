@@ -49,13 +49,16 @@ cd quarkus-ref-implementation
 
 ### Initial Workloads for A/B testing:
 ```
+	kubectl create -f  workloads/frontend/yaml/service-account.yaml
 	kubectl create -f  workloads/frontend/yaml/deployment-v1.yaml
 	kubectl create -f  workloads/frontend/yaml/deployment-v2.yaml
 	kubectl create -f  workloads/frontend/yaml/service.yaml
-
-
 ```
 ## A/B Testing (50-50 to V1 and V2 of the frontend):
+
+```
+	
+```
 
 
 ### Deploy new verision and its Dependency - Canary Release:
