@@ -15,6 +15,10 @@ b) Istio Instalation (tested on istio-1.9.0)
 C) Kiali
 
 ```
+##  Reference Architecture:
+![Capture](https://user-images.githubusercontent.com/16347988/110306608-eb84dc00-7ff5-11eb-9d8a-aed13b6829d0.JPG)
+![Capture_1](https://user-images.githubusercontent.com/16347988/110306631-f0499000-7ff5-11eb-84ba-21090dda7ac3.JPG)
+
 ##  Steps:
 
 ```
