@@ -144,3 +144,17 @@ for ((i=1;i<=2000;i++)); do   curl -v --header "Connection: keep-alive" "http://
 	kubectl get namespace -L istio-injection
 	
 ```
+### Use Token Auth strategy for Kiali:
+```
+	Use 'token' for authentication.
+	Note: you may have to update the kilai.yaml as 'strategy: token' instead of 'strategy: anonymous'
+	
+To Obtain Token:
+	
+	kubectl -n istio-system get sa
+	
+	kubectl -n istio-system describe sa <kiali servive account name>
+	
+	kubectl -n istio-system  describe secret <Mountable secrets>
+	
+```
