@@ -120,7 +120,7 @@ cd quarkus-ref-implementation
 	- Enable canary deployment using Kiali dashboard
 
 Invoke Frontend App using istio-ingressgateway's public IP
-
+```
 curl http://{istio-ingress-externalip}/home?user=india  # traffics will be distributed into v1, v2 and V3 of the frontend workloads equally
 
 curl -H 'username: moses' http://ingress-uri/home?user=uk  # traffic will always be routed to v3 because we pass username=moses in the header. Using A/B testing business users can able to test the code in LIVE before rolling it out to all the users.
