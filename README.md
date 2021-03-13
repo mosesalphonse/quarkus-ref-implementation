@@ -5,7 +5,7 @@
 a) Canary Deployment with A/B Testing
 b) Service Discovery
 c) Istio Ingress Gateway
-
+d) Horizontal Pod Autoscaller
 ```
 ## Prerequisite
 
@@ -51,12 +51,21 @@ cd quarkus-ref-implementation
 ```
 ## Deployments:
 
+## Setup Metric Server(to enable HPA):
+
+```
+	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+	
+```
+
 ### Initial Workloads for A/B testing:
 ```
 	kubectl create -f  workloads/frontend/yaml/service-account.yaml
 	kubectl create -f  workloads/frontend/yaml/deployment-v1.yaml
 	kubectl create -f  workloads/frontend/yaml/deployment-v2.yaml
 	kubectl create -f  workloads/frontend/yaml/service.yaml
+	kubectl autoscale deployment frontend-v1 --cpu-percent=40 --min=1 --max=3
+	kubectl autoscale deployment frontend-v2 --cpu-percent=40 --min=1 --max=3
 ```
 ## Network Config for A/B Testing (50-50 to V1 and V2 of the frontend):
 
@@ -73,7 +82,9 @@ cd quarkus-ref-implementation
 	kubectl create -f workloads/postgres/yamls/postgres.yaml
 	kubectl create -f  workloads/country-ext-rest-client/yaml/manifest.yaml
 	kubectl create -f  workloads/country-sql-client/yaml/manifest.yaml
-
+	kubectl autoscale deployment frontend-v3 --cpu-percent=40 --min=1 --max=3
+	kubectl autoscale deployment extservice-v1 --cpu-percent=40 --min=1 --max=3
+	kubectl autoscale deployment intservice-v1 --cpu-percent=40 --min=1 --max=3
 ```
 
 ### Update Network Config - Canary Release:
@@ -98,7 +109,8 @@ cd quarkus-ref-implementation
 ```
 	kubectl delete -f  workloads/frontend/yaml/deployment-v1.yaml
 	kubectl delete -f  workloads/frontend/yaml/deployment-v2.yaml
-
+	kubectl delete hpa frontend-v1
+	kubectl delete hpa frontend-v2
 ```
 
 ### Uninstall:
@@ -112,7 +124,9 @@ cd quarkus-ref-implementation
 	kubectl delete -f workloads/postgres/yamls/postgres.yaml
 	kubectl delete -f workloads/country-ext-rest-client/yaml/manifest.yaml
 	kubectl delete -f workloads/country-sql-client/yaml/manifest.yaml
-
+	kubectl delete hpa extservice-v1
+	kubectl delete hpa frontend-v3
+	kubectl delete hpa intservice-v1
 ```
 
 ###  Enable Ingress through ISTIO Ingress gateway to Frontend workload:
