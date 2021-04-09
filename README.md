@@ -192,11 +192,11 @@ Apply Security to Istio - Ingress Gateway using JWT:
 	
 Test it:
 
-	curl -H 'Authorization: Bearer {invalid_access_token}' http://35.188.29.164/home?user=uk // Block us to access Istio Ingress Gateway
+	curl -H 'Authorization: Bearer {invalid_access_token}' http://{IstioingressGatewayIP}/home?user=uk // Block us to access Istio Ingress Gateway
 
-	curl -H 'Authorization: Bearer {valid_access_token}' http://35.188.29.164/home?user=uk // allow us to access Istio Ingress Gateway
+	curl -H 'Authorization: Bearer {valid_access_token}' http://{IstioingressGatewayIP}/home?user=uk // allow us to access Istio Ingress Gateway
 
-	curl http://35.188.29.164/home?user=uk // allow us to access Istio Ingress Gateway because we are not passing any Access Token
+	curl http://{IstioingressGatewayIP}/home?user=uk // allow us to access Istio Ingress Gateway because we are not passing any Access Token
 
 	
 To Obtain Access Token:
