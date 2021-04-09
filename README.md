@@ -164,8 +164,10 @@ for ((i=1;i<=2000;i++)); do   curl -v --header "Connection: keep-alive" "http://
 ```
 	Use 'token' for authentication.
 	Note: you may have to update the kilai.yaml as 'strategy: token' instead of 'strategy: anonymous'
-	
-To Obtain Token:
+
+
+
+To Obtain Access Token:
 	
 	kubectl -n istio-system get sa
 	
@@ -184,7 +186,20 @@ To Obtain Token:
 		3) Make sure you update 'issuer' and 'jwksUri' in security/jwt-authentication-istio-ingress-gateway.yaml
 		4) If you are passing Bearer token, then only it will authenticate, if you are not passing anything in header, Istio-Ingress Gateway will allow the traffic.
 	
-To Obtain Token:
+Apply Security to Istio - Ingress Gateway using JWT:
+
+	kubectl create -f security/jwt-authentication-istio-ingress-gateway.yaml
+	
+Test it:
+
+	curl -H 'Authorization: Bearer {invalid_access_token}' http://35.188.29.164/home?user=uk // Block us to access Istio Ingress Gateway
+
+	curl -H 'Authorization: Bearer {valid_access_token}' http://35.188.29.164/home?user=uk // allow us to access Istio Ingress Gateway
+
+	curl http://35.188.29.164/home?user=uk // allow us to access Istio Ingress Gateway because we are not passing any Access Token
+
+	
+To Obtain Access Token:
 	
 	curl --request POST \
   	--url https://{yourdomain}/oauth/token \
