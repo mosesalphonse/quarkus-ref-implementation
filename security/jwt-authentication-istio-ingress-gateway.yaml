@@ -1,0 +1,12 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "RequestAuthentication"
+metadata:
+  name: "jwt-auth-istioingress"
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      istio: ingressgateway
+  jwtRules:
+  - issuer: "https://dev-n623zxeu.eu.auth0.com/"
+    jwksUri: "https://dev-n623zxeu.eu.auth0.com/.well-known/jwks.json"
