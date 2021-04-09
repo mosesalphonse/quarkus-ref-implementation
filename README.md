@@ -181,11 +181,15 @@ To Obtain Token:
 ```
 	Note: 	1) You may use your own custom Identity Provider, I used Auth0 for this Demo.
 		2) I have applied Peer Authentication to Istio Ingress Gateway
-		3) Make sure you update security/jwt-authentication-istio-ingress-gateway.yaml and 
+		3) Make sure you update 'issuer' and 'jwksUri' in security/jwt-authentication-istio-ingress-gateway.yaml
+		4) If you are passing Bearer token, then only it will authenticate, if you are not passing anything in header, Istio-Ingress Gateway will allow the traffic.
 	
 To Obtain Token:
 	
-	kubectl -n istio-system get sa
+	curl --request POST \
+  	--url https://{yourdomain}/oauth/token \
+  	--header 'content-type: application/json' \
+  	--data '{"client_id":"{your_clientid}","client_secret":"{your_client_secret}","audience":"{your_value}","grant_type":"client_credentials"}'
 	
 
 	
