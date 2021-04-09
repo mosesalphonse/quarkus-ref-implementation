@@ -6,6 +6,8 @@ a) Canary Deployment with A/B Testing
 b) Service Discovery
 c) Istio Ingress Gateway
 d) Horizontal Pod Autoscaller
+e) Security
+	i) Apply JWT Authentication to Istio Ingress Gateway
 ```
 ## Prerequisite
 
@@ -170,5 +172,21 @@ To Obtain Token:
 	kubectl -n istio-system describe sa <kiali servive account name>
 	
 	kubectl -n istio-system  describe secret <Mountable secrets>
+	
+```
+
+## Security:
+
+### Apply JWT Authentication to Istio Ingress Gateway:
+```
+	Note: 	1) You may use your own custom Identity Provider, I used Auth0 for this Demo.
+		2) I have applied Peer Authentication to Istio Ingress Gateway
+		3) Make sure you update security/jwt-authentication-istio-ingress-gateway.yaml and 
+	
+To Obtain Token:
+	
+	kubectl -n istio-system get sa
+	
+
 	
 ```
